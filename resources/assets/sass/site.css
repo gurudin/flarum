@@ -1,0 +1,41 @@
+header .navbar {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+.def-color {
+  color: #667c99 !important;
+}
+.def-bg-color {
+  background: #4d698e !important;
+}
+.content {
+  margin: 20px auto !important;
+  max-width: 1200px !important;
+  min-height: calc(100vh - 57px - 40px); /* '24px' is footer height */
+}
+.font12 {
+  font-size: 12px !important;
+}
+.font13 {
+  font-size: 13px !important;
+}
+.font14 {
+  font-size: 14px !important;
+}
+.margin-25 {
+  margin-top: 25px !important;
+}
+.content-left .left-p {
+  cursor: pointer;
+  font-size: 14px;
+  color: #667c99;
+}
+.content-left .active {
+  color: #4d698e;
+  font-weight: bold;
+}
+.content-left .left-p .icon {
+  height: 14px;
+  width: 14px;
+  margin-right: 10px;
+}
