@@ -25,8 +25,8 @@ class CreateCategoryTable extends Migration
             $table->tinyInteger('enabled')->default(1)->comment('0:不启动 1:启用');
             $table->timestamps();
 
-            // $table->index(['parent_id']);
-            // $table->index(['alias']);
+            $table->index(['parent_id']);
+            $table->index(['alias']);
         });
     }
 

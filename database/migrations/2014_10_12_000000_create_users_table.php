@@ -46,7 +46,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('status')->nullable(false)->default(1);
             $table->timestamps();
 
-            // $table->unique('email');
+            $table->unique('email');
         });
     }
 

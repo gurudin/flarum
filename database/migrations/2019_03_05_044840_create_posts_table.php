@@ -35,6 +35,8 @@ class CreatePostsTable extends Migration
             $table->integer('pv')->defaultValue(0)->comment('访问量');
             $table->tinyInteger('status')->nullable(false)->default(2)->comment('0:下线 1:上线 2:待审核');
             $table->timestamps();
+
+            $table->index(['fk_category_id', 'status']);
         });
     }
 
