@@ -25,7 +25,7 @@ export default {
   },
   actions: {
     getArticle({ state, commit }) {
-      if (state.searchKey.c == '') {
+      if (state.searchKey.c == '' || state.searchKey.c == 'all') {
         state.searchKey.cId = '';
         api.getArticle(state.searchKey).then(function (res) {
           commit('getArticle', res.body);

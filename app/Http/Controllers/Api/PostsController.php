@@ -18,7 +18,6 @@ class PostsController extends BaseController
      */
     public function all(Request $request)
     {
-        sleep(1);
         $order       = $request->get('order', 'new');
         $page        = $request->get('p', 1);
         $categoryId  = $request->get('cId', ''); // Category id.

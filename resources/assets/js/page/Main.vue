@@ -11,7 +11,7 @@
           <select class="form-control form-control-sm def-color"
             v-model="searchKey.order"
             style="border: 1px solid #667c99;"
-            @change="getArticle">
+            @change="refreshArticle">
             <option value="new">{{$t('latest-posts')}}</option>
             <option value="top">{{$t('top-posts')}}</option>
           </select>
