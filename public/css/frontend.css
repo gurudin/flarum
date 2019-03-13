@@ -1,0 +1,27 @@
+body {
+  background-color: #f2f2f2;
+}
+
+.font20 {
+  font-size: 20px !important;
+}
+
+.carousel-hot {
+  position: relative; overflow: hidden;
+}
+.carousel-hot .carousel-img {
+  width: 600px;
+  height: 300px;
+}
+.carousel-hot .tabs-box {
+  position: absolute;
+  left: 610px;
+  top: 0;
+  height: 300px;
+}
+.carousel-hot .tabs a.active {
+  color: #4d698e !important;
+  border-bottom: 2px solid #4d698e;
+  border-radius: 0;
+  background-color: white;
+}

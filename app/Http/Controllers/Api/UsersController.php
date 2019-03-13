@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Validator\Api\UsersValidator;
 use App\User;
+use App\Models\Accounts;
 
 class UsersController extends BaseController
 {
@@ -51,6 +52,14 @@ class UsersController extends BaseController
             if ($share_user = User::find($share_id)) {
                 $share_user->coins = $share_user->coins + config('api.reward.share_coins');
                 $share_user->save();
+                // Share account.
+                Accounts::add([
+                    'user_id' => $share_id,
+                    'sort' => Accounts::INCOME,
+                    'type' => Accounts::INVITE,
+                    'coin' => config('api.reward.share_coins'),
+                    'balance' => $share_user->coins
+                ]);
 
                 $user->coins = $user->coins + config('api.reward.register_coins');
             } else {

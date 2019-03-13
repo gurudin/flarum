@@ -13,7 +13,7 @@
 
       <!-- Left menu -->
       <a href="#" v-if="$route.name != 'detail'" class="d-block d-xl-none def-color" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></a>
-      <button v-if="$route.name == 'detail'" @click="goBack" class="d-block d-xl-none def-color"><i class="fas fa-chevron-left"></i></button>
+      <button v-if="$route.name == 'detail'" @click="goBack" class="d-block d-xl-none def-color" style="border: none; background: #f8f9fa;"><i class="fas fa-chevron-left"></i></button>
       <!-- /Left menu -->
 
       <!-- Center button -->

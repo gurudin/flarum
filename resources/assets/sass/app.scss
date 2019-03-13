@@ -25,3 +25,25 @@
     column-count: 4;
   }
 }
+
+.main {
+  @include media-breakpoint-only(lg) {
+    min-width: 1100px;
+    z-index: 99;
+    left: 0px;
+    height: 100%;
+    top: 0px;
+    padding-left: 55px;
+  }
+  @include media-breakpoint-only(xl) {
+    min-width: 1100px;
+    z-index: 99;
+    left: 0px;
+    height: 100%;
+    top: 0px;
+    padding-left: 55px;
+  }
+  @include media-breakpoint-only(sm) {
+
+  }
+}

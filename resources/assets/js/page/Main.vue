@@ -8,7 +8,7 @@
     <div class="col-lg-10 col-sm-12 content-right">
       <div class="px-1 control-bar clearfix">
         <div class="float-left">
-          <select class="form-control form-control-sm def-color"
+          <select class="custom-select custom-select-sm def-color"
             v-model="searchKey.order"
             style="border: 1px solid #667c99;"
             @change="refreshArticle">

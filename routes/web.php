@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/m', function () {
     return view('app');
+});
+
+Route::group(['namespace' => 'Frontend'], function () {
+    Route::get('/', 'SiteController@index')->name('admin.home');
 });
 
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {
