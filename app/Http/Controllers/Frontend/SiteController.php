@@ -3,17 +3,24 @@
 namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SiteController
 {
     /**
      * Show the application dashboard.
      *
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('frontend.index');
+        $blade = $request->input('blade', '');
+
+        return view('frontend.index', compact(
+            'blade'
+        ));
     }
 
     /**

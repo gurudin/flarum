@@ -24,7 +24,8 @@ class CreateAccountsTable extends Migration
             $table->string('sort', 20)->nullable(false)->comment('账务类别');
             /**
              * 触发类型
-             * login 注册
+             * register 注册
+             * login 登陆
              * invite 邀请
              * posts 看帖
              * buy 购买

@@ -15,6 +15,7 @@ class Accounts extends Model
 
     /** Filed type the options. */
     const LOGIN = 'login';
+    const REGISTER = 'register';
     const INVITE = 'invite';
     const POSTS = 'posts';
     const BUY = 'buy';

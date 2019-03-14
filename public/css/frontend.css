@@ -2,8 +2,37 @@ body {
   background-color: #f2f2f2;
 }
 
+.font15 {
+  font-size: 15px !important;
+}
 .font20 {
   font-size: 20px !important;
+}
+
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.left-bar {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 55px;
+  padding: 0;
+  height: 100%;
+  box-shadow: -2px 0px 4px rgba(0,0,0,1);
+  z-index: 98;
+}
+.right-content {
+  z-index: 1;
+  margin-bottom: 0px;
+  float: none;
+  position: relative;
 }
 
 .carousel-hot {
@@ -24,4 +53,41 @@ body {
   border-bottom: 2px solid #4d698e;
   border-radius: 0;
   background-color: white;
+}
+
+.recomment-posts a {
+  color: #fff;
+  height: 50px;
+  width: 18.9%;
+  padding: 10px 1%;
+  margin: 0 0.5% 15px 0.5%;
+  float: left;
+  opacity: 0.8;
+  -moz-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+
+  background-color: #83A3BC;
+}
+.recomment-posts a:hover {
+  text-decoration: none;
+}
+.recomment-posts a h5 {
+  margin-bottom: 0;
+  margin-top: -5px;
+}
+.recomment-posts a p {
+  margin-top: 5px;
+}
+
+.panel-category .navbar {
+  height: 40px;
+}
+.panel-category .media b:hover {
+  color: #202831 !important;
+}
+.panel-category .media p {
+  margin: 3px 0;
 }

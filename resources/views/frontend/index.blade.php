@@ -1,28 +1,10 @@
 @extends('layouts.frontend.app')
 
 @section('title')
-App
+
 @endsection
 
 @section('css')
-<style>
-.recomment-posts a {
-  color: #fff;
-  height: 50px;
-  width: 18.9%;
-  padding: 10px 1%;
-  margin: 0 0.5% 15px 0.5%;
-  float: left;
-  opacity: 0.8;
-  -moz-transition: all 0.3s ease 0s;
-  -webkit-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-
-  background-color: #83A3BC;
-}
-</style>
 @endsection
 
 @section('script')
@@ -30,7 +12,7 @@ App
 @endsection
 
 @section('carousel-hot')
-<div class="container-fluid mt-3 mb-3 d-none d-xl-block d-lg-block">
+{{-- <div class="container-fluid mt-3 mb-3 d-none d-xl-block d-lg-block">
   <div class="carousel-hot">
     <div class="carousel-img">
       <div id="carouselHot" class="carousel slide" data-ride="carousel">
@@ -68,13 +50,10 @@ App
       <div class="tabs">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active text-muted" data-toggle="pill" href="#pills-home" role="tab" aria-selected="true">最新帖子</a>
+            <a class="nav-link active text-muted" data-toggle="pill" href="#pills-home" role="tab" aria-selected="true">@lang('frontend.latest-posts')</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-muted" data-toggle="pill" href="#pills-profile" role="tab" aria-selected="false">最热帖子</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted" data-toggle="pill" href="#pills-contact" role="tab" aria-selected="false">推荐帖子</a>
+            <a class="nav-link text-muted" data-toggle="pill" href="#pills-profile" role="tab" aria-selected="false">@lang('frontend.top-posts')</a>
           </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
@@ -94,13 +73,14 @@ App
     </div>
     
   </div>
-</div>
+</div> --}}
 @endsection
 
 @section('recomment-posts')
-<div class="container-fluid recomment-posts mt-3 mb-3">
+{{-- <div class="container-fluid recomment-posts mt-3 mb-3 d-none d-xl-block d-lg-block" >
   <a href="#" class="rounded">
-    <b>ROSI写真 2019-03-10 NO.2650 [33+1P/28.4M</b>
+    <h5 class="nowrap font15">ROSI写真 2019-03-10 NO.2650 [33+1P/28.4M</h5>
+    <p class="nowrap text-white-50 font12">ROSI写ROSI写真 2019-03-10 NO.2650 [33+1P/28.4M真</p>
   </a>
   <a href="#" class="rounded">1</a>
   <a href="#" class="rounded">1</a>
@@ -111,9 +91,153 @@ App
   <a href="#" class="rounded">1</a>
   <a href="#" class="rounded">1</a>
   <a href="#" class="rounded">1</a>
-</div>
+</div> --}}
 @endsection
 
 @section('content')
+<div class="container-fluid mb-3">
 
+  <div class="panel-category bg-white rounded mt-3">
+    <nav class="navbar bg-dark rounded-top">
+      <a class="text-white" href="#">Navbar w/ text</a>
+
+      <a class="text-white" data-toggle="collapse" href="#collapse1" aria-expanded="false">
+        <i class="fas fa-angle-down"></i>
+      </a>
+    </nav>
+
+    <div class="collapse show row col-12" id="collapse1">
+      
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="panel-category bg-white rounded mt-3">
+    <nav class="navbar bg-dark rounded-top">
+      <a class="text-white" href="#">Navbar w/ text</a>
+
+      <a class="text-white" data-toggle="collapse" href="#collapse2" aria-expanded="false">
+        <i class="fas fa-angle-down"></i>
+      </a>
+    </nav>
+
+    <div class="collapse show row col-12" id="collapse2">
+      
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+
+      <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
+        <div class="media-body nowrap">
+          <b class="mt-0 h5 def-color pointer">Media heading</b>
+          <p class="font12 text-muted">主题: 123</p>
+          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+
+@login(['blade' => $blade])
+@endlogin
+
+@register(['blade' => $blade])
+@endregister
 @endsection

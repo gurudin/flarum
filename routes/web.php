@@ -18,7 +18,10 @@ Route::get('/m', function () {
 });
 
 Route::group(['namespace' => 'Frontend'], function () {
-    Route::get('/', 'SiteController@index')->name('admin.home');
+    Route::get('/', 'SiteController@index')->name('frontend.home');
+    Route::post('/login', 'UsersController@login')->name('frontend.login');
+    Route::post('/register', 'UsersController@register')->name('frontend.register');
+    Route::get('/logout', 'UsersController@logout')->name('frontend.logout');
 });
 
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {
