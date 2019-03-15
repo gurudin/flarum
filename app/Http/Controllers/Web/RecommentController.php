@@ -96,7 +96,7 @@ class RecommentController extends Controller
                 // Create
                 $m = new Recomment;
                 $m->type         = $data['type'];
-                $m->recomment_id = !empty($data['recomment_id']) ? $data['recomment_id'] : '';
+                $m->recomment_id = !empty($data['recomment_id']) ? $data['recomment_id'] : null;
                 $m->url          = !empty($data['url']) ? $data['url'] : '';
                 $m->position     = $data['position'];
                 $m->cover        = !empty($data['cover']) ? $data['cover'] : '';

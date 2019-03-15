@@ -46,4 +46,20 @@ class Posts extends Model
 
         return $query->get();
     }
+
+    /**
+     * Frontend latest or hots.
+     */
+    protected static function getLaetstOrHots(string $type = 'latest')
+    {
+        $query = static::where(['status' => 1]);
+        if ($type == 'latest') {
+            $query = $query->orderBy('id', 'desc');
+        }
+        if ($type = 'hots') {
+            $query = $query->orderBy('real_pv', 'desc');
+        }
+
+        return $query->offset(0)->limit(6)->get();
+    }
 }

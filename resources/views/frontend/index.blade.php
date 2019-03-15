@@ -17,23 +17,33 @@
     <div class="carousel-img">
       <div id="carouselHot" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          <li data-target="#carouselHot" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselHot" data-slide-to="1"></li>
+          @foreach ($recomments as $inx => $recomment)
+            @continue($recomment['position'] != 1)
+            <li data-target="#carouselHot" data-slide-to="{{$inx}}" class="{{$inx == 0 ? 'active' : ''}}"></li>
+          @endforeach
         </ol>
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100 rounded" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <p>slide 1</p>
-            </div>
-          </div>
 
-          <div class="carousel-item">
-            <img class="d-block w-100 rounded" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <p>slide 2</p>
+          @foreach ($recomments as $inx => $recomment)
+            @continue($recomment['position'] != 1)
+            <div class="carousel-item {{$inx == 0 ? 'active' : ''}}">
+              @if ($recomment['type'] == 'posts')
+                <a href="{{route('frontend.post', ['id' => $recomment['recomment_id']])}}" target="_blank">
+              @elseif ($recomment['type'] == 'category')
+                <a href="{{url(url()->current() . '?alias=' . $recomment['alias'])}}">
+              @else
+                <a href="{{$recomment['url']}}" target="_blank">
+              @endif
+                <img class="rounded" width="600" height="300" src="{{$recomment['cover']}}" alt="...">
+              </a>
+              <div class="carousel-caption d-none d-md-block">
+                <p>
+                  {{$recomment['remark']=='' ? (isset($recomment['title']) ? $recomment['title'] : '') : $recomment['remark']}}
+                </p>
+              </div>
             </div>
-          </div>
+          @endforeach
+
         </div>
         <a class="carousel-control-prev" href="#carouselHot" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -46,9 +56,9 @@
       </div>
     </div>
 
-    <div class="tabs-box w-100 bg-white rounded">
+    <div class="tabs-box bg-white rounded">
       <div class="tabs">
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="padding-left: 1.25rem;">
           <li class="nav-item">
             <a class="nav-link active text-muted" data-toggle="pill" href="#pills-home" role="tab" aria-selected="true">@lang('frontend.latest-posts')</a>
           </li>
@@ -57,17 +67,31 @@
           </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
+          {{-- Latest --}}
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
+            <ol class="list-group list-group-flush">
+              @foreach ($posts['latest'] as $inx => $item)
+              <li class="list-group-item">
+                <span class="text-muted font-italic">{{$inx + 1}}. </span>
+                <a href="{{route('frontend.post', ['id' => $item->id])}}" target="_blank" class="text-dark">{{$item->title}}</a>
+                <div class="float-right text-muted font12">{{date('m/d', strtotime($item->created_at))}}</div>
+              </li>
+              @endforeach
+            </ol>
           </div>
-          <div class="tab-pane fade" id="pills-profile" role="tabpanel">2</div>
-          <div class="tab-pane fade" id="pills-contact" role="tabpanel">3</div>
+
+          {{-- Hots --}}
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel">
+            <ol class="list-group list-group-flush">
+              @foreach ($posts['hots'] as $inx => $item)
+              <li class="list-group-item">
+                <span class="text-muted font-italic">{{$inx + 1}}. </span>
+                <a href="{{route('frontend.post', ['id' => $item->id])}}" target="_blank" class="text-dark">{{$item->title}}</a>
+                <div class="float-right text-muted font12">{{date('m/d', strtotime($item->created_at))}}</div>
+              </li>
+              @endforeach
+            </ol>
+          </div>
         </div>
       </div>
     </div>
@@ -76,22 +100,25 @@
 </div>
 @endsection
 
+@inject('metrics', 'App\Utils\Common')
 @section('recomment-posts')
-{{-- <div class="container-fluid recomment-posts mt-3 mb-3 d-none d-xl-block d-lg-block" >
-  <a href="#" class="rounded">
-    <h5 class="nowrap font15">ROSI写真 2019-03-10 NO.2650 [33+1P/28.4M</h5>
-    <p class="nowrap text-white-50 font12">ROSI写ROSI写真 2019-03-10 NO.2650 [33+1P/28.4M真</p>
-  </a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-  <a href="#" class="rounded">1</a>
-</div> --}}
+
+<div class="container-fluid recomment-posts mt-3 mb-3 d-none d-xl-block d-lg-block">
+  @foreach ($recomments as $inx => $recomment)
+    @continue($recomment['position'] != 2)
+
+    @if ($recomment['type'] == 'posts')
+      <a href="{{route('frontend.post', ['id' => $recomment['recomment_id']])}}" target="_blank" class="rounded" style="background-color: {{$metrics->randColor()}};">
+    @elseif ($recomment['type'] == 'category')
+      <a href="{{url(url()->current() . '?alias=' . $recomment['alias'])}}" class="rounded" style="background-color: {{$metrics->randColor()}};">
+    @else
+      <a href="{{$recomment['url']}}" target="_blank" class="rounded" style="background-color: {{$metrics->randColor()}};">
+    @endif
+      <h5 class="nowrap font15">{{$recomment['title']}}</h5>
+      <p class="nowrap text-white-50 font12">{{$recomment['remark']}}</p>
+    </a>
+  @endforeach
+</div>
 @endsection
 
 @section('content')
