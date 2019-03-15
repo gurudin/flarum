@@ -60,7 +60,9 @@ class CategoryController extends Controller
                 $m = Category::find(($request->get('id')));
             }
 
-            return view('admin.category.save', compact('m'));
+            $categorys = Category::where(['parent_id' => 0])->get();
+
+            return view('admin.category.save', compact('m', 'categorys'));
         }
 
         /**
@@ -73,7 +75,7 @@ class CategoryController extends Controller
                 $m = new Category;
                 $m->category = $data['category'];
                 $m->alias = $data['alias'];
-                $m->color = $data['color'];
+                $m->color = empty($data['color']) ? '' : $data['color'];
                 $m->enabled = $data['enabled'];
                 $m->parent_id = $data['parent_id'];
                 $m->weight = $data['weight'];
@@ -88,7 +90,7 @@ class CategoryController extends Controller
                 $m = Category::find($data['id']);
                 $m->category = $data['category'];
                 $m->alias = $data['alias'];
-                $m->color = $data['color'];
+                $m->color = empty($data['color']) ? '' : $data['color'];
                 $m->enabled = $data['enabled'];
                 $m->parent_id = $data['parent_id'];
                 $m->weight = $data['weight'];

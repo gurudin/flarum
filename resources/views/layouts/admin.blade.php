@@ -13,6 +13,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/site.css') }}" rel="stylesheet">
+  @yield('css')
 </head>
 
 <body>
@@ -59,7 +60,7 @@
         </div>
       </nav>
 
-      <div class="main">
+      <div class="main-admin w-100">
         <nav class="navbar navbar-expand navbar-light bg-white">
           <a class="sidebar-toggle d-flex mr-2">
             <i class="hamburger align-self-center"></i>

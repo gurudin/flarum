@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use App\Upload;
 
 class SiteController extends \App\Http\Controllers\Controller
 {
@@ -25,25 +26,17 @@ class SiteController extends \App\Http\Controllers\Controller
      */
     public function upload(Request $request)
     {
-        $file = $request->file('file');
-        $realPath = $file->getRealPath();
-        $extension = $file->getClientOriginalExtension();
-        $targetPath = sprintf(
-            '/public/images/%s/%s',
-            date('Y'),
-            date('m')
-        );
-        $fileName = time() . random_int(1000, 9999) . '.' . $extension;
-
-        $path =  $request->file('file')->storeAs(
-            $targetPath,
-            $fileName
-        );
-
-        if ($path) {
-            return ['status' => true, 'path' => str_replace('public', 'storage', $targetPath) . '/' . $fileName];
+        if ($request->file('file')) {
+            return (new Upload)->upload($request);
         } else {
-            return ['status' => false, 'msg' => 'upload error.'];
+            $result =  (new Upload)->upload($request);
+            return ['uploaded' => true, 'url' => $result['path']];
         }
+    }
+    
+
+    public function generate(Request $request)
+    {
+        return (new Upload)->generate($request);
     }
 }

@@ -96,13 +96,13 @@
 <div class="main">
   <div class="left-bar def-bg-color d-none d-xl-block d-lg-block">
     <p class="text-center mt-3">
-      <a href="" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.home')"><i class="fas fa-home"></i></a>
+      <a href="/" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.home')"><i class="fas fa-home"></i></a>
     </p>
     <p class="text-center mt-3">
-      <a href="" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.list')"><i class="fas fa-list-ol"></i></a>
+      <a href="/" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.list')"><i class="fas fa-list-ol"></i></a>
     </p>
     <p class="text-center mt-3">
-      <a href="" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.collect')"><i class="far fa-star"></i></a>
+      <a href="/" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.collect')"><i class="far fa-star"></i></a>
     </p>
   </div>
 
@@ -113,10 +113,10 @@
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+      <div class="navbar-collapse collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">@lang('frontend.home') <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">@lang('frontend.home') <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">@lang('frontend.invite')</a>

@@ -12,7 +12,7 @@
 @endsection
 
 @section('carousel-hot')
-{{-- <div class="container-fluid mt-3 mb-3 d-none d-xl-block d-lg-block">
+<div class="container-fluid mt-3 mb-3 d-none d-xl-block d-lg-block">
   <div class="carousel-hot">
     <div class="carousel-img">
       <div id="carouselHot" class="carousel slide" data-ride="carousel">
@@ -73,7 +73,7 @@
     </div>
     
   </div>
-</div> --}}
+</div>
 @endsection
 
 @section('recomment-posts')
@@ -97,141 +97,34 @@
 @section('content')
 <div class="container-fluid mb-3">
 
-  <div class="panel-category bg-white rounded mt-3">
-    <nav class="navbar bg-dark rounded-top">
-      <a class="text-white" href="#">Navbar w/ text</a>
+  {{-- @foreach ($categorys as $category)
+    <div class="panel-category bg-white rounded mt-3">
+      <nav class="navbar bg-secondary rounded-top">
+        <a class="text-white" href="{{url(url()->current() . '?alias=' . $category['alias'])}}">{{$category['category']}}</a>
 
-      <a class="text-white" data-toggle="collapse" href="#collapse1" aria-expanded="false">
-        <i class="fas fa-angle-down"></i>
-      </a>
-    </nav>
+        <a class="text-white" data-toggle="collapse" href="#collapse{{$category['id']}}" aria-expanded="false">
+          <i class="fas fa-angle-down"></i>
+        </a>
+      </nav>
 
-    <div class="collapse show row col-12" id="collapse1">
-      
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+      <div class="collapse show row col-12" id="collapse{{$category['id']}}">
+        
+        @foreach ($category['children'] as $child)
+        <div class="media mt-2 mb-1 col-xl-3 col-12">
+        <img class="mr-2 pointer rounded" width="64" height="64" src="{{$child['pic']}}" alt="{{$child['category']}}" title="{{$child['category']}}">
+          <div class="media-body nowrap">
+            <b class="mt-0 h5 def-color pointer">
+              {{$child['category']}}
+            </b>
+            <p class="font12 text-muted">主题: 123</p>
+            <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+          </div>
         </div>
+        @endforeach
+        
       </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-      
     </div>
-  </div>
-
-  <div class="panel-category bg-white rounded mt-3">
-    <nav class="navbar bg-dark rounded-top">
-      <a class="text-white" href="#">Navbar w/ text</a>
-
-      <a class="text-white" data-toggle="collapse" href="#collapse2" aria-expanded="false">
-        <i class="fas fa-angle-down"></i>
-      </a>
-    </nav>
-
-    <div class="collapse show row col-12" id="collapse2">
-      
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-
-      <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer" width="64" height="64" src="https://d9iyrkd8y2zpr.cloudfront.net/webapi-assets-dev/resources/banners/201903/cms3-message-sqbnu9uq7rsj2ruc.png" alt="Generic placeholder image">
-        <div class="media-body nowrap">
-          <b class="mt-0 h5 def-color pointer">Media heading</b>
-          <p class="font12 text-muted">主题: 123</p>
-          <p class="font12 text-muted">最后发表时间: 13.12.11</p>
-        </div>
-      </div>
-      
-    </div>
-  </div>
+  @endforeach --}}
 
 </div>
 

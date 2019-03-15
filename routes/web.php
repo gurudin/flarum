@@ -27,7 +27,14 @@ Route::group(['namespace' => 'Frontend'], function () {
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {
     Auth::routes();
     Route::get('/', 'SiteController@index')->name('admin.home');
+    
+    // Upload
     Route::post('/upload', 'SiteController@upload')->name('admin.upload');
+    Route::post('/generate', 'SiteController@generate')->name('admin.generate');
+
+    // Site
+    Route::match(['get', 'post'], '/recomment/list', 'RecommentController@list')->name('admin.recomment.list');
+    Route::match(['get', 'post'], '/recomment/save', 'RecommentController@save')->name('admin.recomment.save');
 
     // Category
     Route::match(['get', 'post'], '/category/list', 'CategoryController@list')->name('admin.category.list');

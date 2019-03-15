@@ -22,7 +22,9 @@
           <label>Category</label>
           <select class="form-control" v-model="keys.fk_category_id">
             <option value="">-- Select category --</option>
-            <option v-for="(id,name) in init.category" :value="id">@{{name}}</option>
+            <optgroup v-for="item in init.categorys" :label="item.category">
+              <option v-for="child in item.children" :value="child.id">@{{child.category}}</option>
+            </optgroup>
           </select>
         </div>
 
@@ -51,6 +53,7 @@
           <th scope="col">Title</th>
           <th scope="col">Category</th>
           <th scope="col">Coin</th>
+          <th scope="col">Pv</th>
           <th scope="col">Level</th>
           <th>Status</th>
           <th>Created at</th>
@@ -64,6 +67,7 @@
           <td>@{{item.title}}</td>
           <td>@{{getName(item.fk_category_id)}}</td>
           <td>@{{item.coin}}</td>
+          <td>@{{item.real_pv}}</td>
           <td>@{{getLevel(item.read_level)}}</td>
           <td>
             <toggle-button
@@ -109,7 +113,7 @@ const vm = new Vue({
     return {
       init: {
         list: @json($posts).data,
-        category: @json($category),
+        categorys: @json($categorys),
         levels: @json($levels),
         href: {
           current: "{{route('admin.posts.list')}}",
@@ -129,12 +133,14 @@ const vm = new Vue({
     },
     getName(id) {
       var categoryName = '';
-      for (const name in this.init.category) {
-        if (this.init.category[name] == id) {
-          categoryName = name;
-          break;
-        }
-      }
+      this.init.categorys.forEach(row =>{
+        row.children.forEach(child =>{
+          if (child.id = id) {
+            categoryName = child.category;
+            return false;
+          }
+        });
+      });
 
       return categoryName;
     },

@@ -33,6 +33,7 @@ class CreatePostsTable extends Migration
             $table->text('content')->comment('内容');
             $table->string('tags')->nullable(false)->default('')->comment('标签');
             $table->integer('pv')->defaultValue(0)->comment('访问量');
+            $table->integer('real_pv')->defaultValue(0)->comment('真实访问量');
             $table->tinyInteger('status')->nullable(false)->default(2)->comment('0:下线 1:上线 2:待审核');
             $table->timestamps();
 

@@ -33,13 +33,13 @@ class PostsController extends Controller
 
             $posts = Posts::where($where)->orderBy('id', 'desc')->paginate(config('admin.pageSize'));
 
-            $category = (new Category)->where(['enabled' => 1])->pluck('id', 'category');
+            $categorys = Category::getAll();
 
             $levels = Posts::READ_LEVEL;
 
             return view('admin.posts.list', compact(
                 'posts',
-                'category',
+                'categorys',
                 'search',
                 'levels'
             ));
@@ -84,11 +84,11 @@ class PostsController extends Controller
                 $m = Posts::find(($request->get('id')));
             }
 
-            $category = (new Category)->where(['enabled' => 1])->pluck('id', 'category');
+            $categorys = Category::getAll();
 
             $levels = Posts::READ_LEVEL;
 
-            return view('admin.posts.save', compact('m', 'category', 'levels'));
+            return view('admin.posts.save', compact('m', 'categorys', 'levels'));
         }
 
         /**
@@ -110,6 +110,7 @@ class PostsController extends Controller
                 $m->content = $data['content'];
                 $m->tags = empty($data['tags']) ? '' : $data['tags'];
                 $m->pv = $data['pv'];
+                $m->real_pv = 0;
                 $m->status = $data['status'];
 
                 return $m->save()

@@ -17,6 +17,9 @@ body {
 .pointer {
   cursor: pointer;
 }
+.def-color:hover {
+  color: #617a9a !important;
+}
 
 .left-bar {
   position: fixed;
@@ -84,9 +87,6 @@ body {
 
 .panel-category .navbar {
   height: 40px;
-}
-.panel-category .media b:hover {
-  color: #202831 !important;
 }
 .panel-category .media p {
   margin: 3px 0;

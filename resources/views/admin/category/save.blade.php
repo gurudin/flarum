@@ -24,6 +24,7 @@ Category
         <label>Parent category</label>
         <select class="form-control" v-model.number="init.m.parent_id">
           <option value="0">顶级类别</option>
+          <option v-for="category in init.categorys" :value="category.id">@{{category.category}}</option>
         </select>
       </div>
 
@@ -38,7 +39,7 @@ Category
       </div>
 
       <div class="form-group col-5">
-        <label>Color <small>*</small></label>
+        <label>Color</label>
         <div class="input-group mb-3">
           <input type="text" class="form-control" v-model.trim="init.m.color" placeholder="Enter category alias">
           <div class="input-group-append">
@@ -54,8 +55,14 @@ Category
         <input type="number" class="form-control" v-model.trim="init.m.weight" placeholder="Enter weight">
       </div>
 
-      <div class="form-group col-8">
-        <label>Icon</label>
+      <div class="form-group col-6">
+        <label>Icon <small>*</small></label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="生成图片内容" ref="auto-image-name">
+          <div class="input-group-append">
+            <button class="btn btn-outline-success" type="button" @click="generateImage">生成图片</button>
+          </div>
+        </div>
         <vue-upload-picker
           v-model="init.m.pic"
           :post-uri="href.upload"
@@ -88,11 +95,13 @@ new Vue({
     return {
       init: {
         m: @json($m),
+        categorys: @json($categorys),
       },
       href: {
         index: "{{route('admin.category.list')}}",
         current: "{{route('admin.category.save')}}",
         upload: "{{route('admin.upload')}}",
+        generate: "{{route('admin.generate')}}",
       },
     };
   },
@@ -101,7 +110,7 @@ new Vue({
       var m = this.init.m;
       if (m.category == ''
         || m.alias == ''
-        || m.color == ''
+        || m.pic == ''
       ) {
         return false;
       }
@@ -110,6 +119,28 @@ new Vue({
     }
   },
   methods: {
+    generateImage(event) {
+      var imgName = this.$refs['auto-image-name'].value;
+      if (imgName == '') {
+        return false;
+      }
+      
+      var $btn = $(event.currentTarget).loading('<i class="fas fa-spinner fa-spin"></i>');
+      var _this = this;
+      axios.post(this.href.generate, {
+        title: imgName
+      }).then(function (response) {
+        return response.data;
+      }).then(function (rep) {
+        console.log(rep);
+        if (rep.status) {
+          _this.init.m.pic = rep.path;
+        } else {
+          alert(rep.msg);
+        }
+        $btn.loading('reset');
+      });
+    },
     save(event) {
       var $btn = $(event.currentTarget).loading('<i class="fas fa-spinner fa-spin"></i>');
       var _this = this;
