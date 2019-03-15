@@ -20,17 +20,23 @@ class RecommentController extends Controller
     public function list(Request $request)
     {
         if ($request->isMethod('get')) {
-            $categorys = Category::getAll();
+            $categorys    = Category::getAll();
+            $recomments   = Recomment::orderBy('id', 'desc')->paginate(config('admin.pageSize'));
+            $positions    = Recomment::POSITIONS;
+            $type_options = Recomment::TYPE_OPTIONS;
 
             return view('admin.recomment.list', compact(
-                'categorys'
+                'categorys',
+                'recomments',
+                'positions',
+                'type_options'
             ));
         }
 
         // Enabled
         if ($request->post('action') == 'enabled') {
-            $category = Category::find($request->post('id'));
-            $category->enabled = $request->post('enabled');
+            $category = Recomment::find($request->post('id'));
+            $category->status = $request->post('enabled');
 
             return $category->save()
                 ? ['status' => true, 'msg' => 'success']
@@ -39,7 +45,7 @@ class RecommentController extends Controller
 
         // Remove
         if ($request->post('action') == 'remove') {
-            return Category::destroy($request->post('id'))
+            return Recomment::destroy($request->post('id'))
                 ? ['status' => true, 'msg' => 'success']
                 : ['status' => false, 'msg' => 'Failed to delete.'];
         }
@@ -55,11 +61,16 @@ class RecommentController extends Controller
     public function save(Request $request)
     {
         if ($request->isMethod('get')) {
-            $categorys = Category::getAll();
+            $m = [];
+            if ($request->get('id', '') == '') {
+                $m = Recomment::attributeLabels();
+            } else {
+                $m = Recomment::find(($request->get('id')));
+            }
 
-            $m = Recomment::attributeLabels();
+            $categorys    = Category::getAll();
             $type_options = Recomment::TYPE_OPTIONS;
-            $positions = Recomment::POSITIONS;
+            $positions    = Recomment::POSITIONS;
 
             return view('admin.recomment.save', compact(
                 'm',
@@ -70,15 +81,45 @@ class RecommentController extends Controller
         }
 
         /**
+         * Posts
+         */
+        if ($request->post('action') == 'posts') {
+            return ['status' => true, 'data' => Posts::searchPost($request->post('key'))];
+        }
+
+        /**
          * Save
          */
         if ($request->post('action') == 'save') {
             $data = $request->post('data');
             if (!isset($data['id']) || empty($data['id'])) {
                 // Create
+                $m = new Recomment;
+                $m->type         = $data['type'];
+                $m->recomment_id = !empty($data['recomment_id']) ? $data['recomment_id'] : '';
+                $m->url          = !empty($data['url']) ? $data['url'] : '';
+                $m->position     = $data['position'];
+                $m->cover        = !empty($data['cover']) ? $data['cover'] : '';
+                $m->status       = $data[ 'status'];
+                $m->remark       = !empty($data['remark']) ? $data['remark'] : '';
+
+                return $m->save()
+                    ? ['status' => true, 'msg' => 'success']
+                    : ['status' => false, 'msg' => 'Failed to create.'];
             } else {
                 // Update
-                
+                $m = Recomment::find($data['id']);
+                $m->type         = $data['type'];
+                $m->recomment_id = !empty($data['recomment_id']) ? $data['recomment_id'] : '';
+                $m->url          = !empty($data['url']) ? $data['url'] : '';
+                $m->position     = $data['position'];
+                $m->cover        = !empty($data['cover']) ? $data['cover'] : '';
+                $m->status       = $data['status'];
+                $m->remark       = !empty($data['remark']) ? $data['remark'] : '';
+
+                return $m->save()
+                    ? ['status' => true, 'msg' => 'success']
+                    : ['status' => false, 'msg' => 'Failed to update.'];
             }
         }
     }

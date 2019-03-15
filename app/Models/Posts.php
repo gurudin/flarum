@@ -30,4 +30,20 @@ class Posts extends Model
             'status' => 1,
         ];
     }
+
+    /**
+     * Search posts.
+     */
+    protected static function searchPost($key = '')
+    {
+        $query = static::where(['status' => 1])->orderBy('weight', 'desc')->orderBy('id', 'desc');
+
+        if (is_numeric($key)) {
+            $query = $query->where(['id' => $key]);
+        } else {
+            $query = $query->where('title', 'like', '%' . $key . '%');
+        }
+
+        return $query->get();
+    }
 }

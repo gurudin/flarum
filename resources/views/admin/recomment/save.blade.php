@@ -22,7 +22,7 @@ Recomment
     <form>
       <div class="form-group col-4">
         <label>推荐类型 <small>*</small></label>
-        <select class="form-control" v-model="init.m.type">
+        <select class="form-control" v-model="typeData">
           <option v-for="(value,key) in init.typeOptions" :value="key">@{{value}}</option>
         </select>
       </div>
@@ -32,7 +32,7 @@ Recomment
         <label>推荐帖子 <small>*</small></label>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">未选择</span>
+            <span class="input-group-text">@{{currentPost.title ? currentPost.title : '未选择'}}</span>
           </div>
           <div class="input-group-append">
             <button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#postsModal">选择帖子</button>
@@ -43,7 +43,7 @@ Recomment
       <div class="form-group col-4" v-if="init.m.type == 'category'">
         <label>推荐类别 <small>*</small></label>
         <select class="form-control" v-model="init.m.recomment_id">
-          <option value="">选择类别</option>
+          <option value="">--选择类别--</option>
           <optgroup v-for="item in init.categorys" :label="item.category">
               <option v-for="child in item.children" :value="child.id">@{{child.category}}</option>
             </optgroup>
@@ -55,7 +55,29 @@ Recomment
         <input type="text" class="form-control" v-model.trim="init.m.url" placeholder="链接地址">
       </div>
       {{-- /Recomment options --}}
-      
+
+      <div class="form-group col-4">
+        <label>位置 <small>*</small></label>
+        <select class="form-control" v-model="init.m.position">
+          <option value="">--选择位置--</option>
+          <option v-for="(value,key) in init.positions" :value="key">@{{value}}</option>
+        </select>
+      </div>
+
+      <div class="form-group col-6">
+        <label>封面图片</label>
+        <vue-upload-picker
+          v-model="init.m.cover"
+          :post-uri="href.upload"
+          title="点击上传封面图片"
+          icon='<i class="fas fa-file-import"></i>'
+          class-name="btn btn-primary text-white"></vue-upload-picker>
+      </div>
+
+      <div class="form-group col-8">
+        <label>描述</label>
+        <input type="text" class="form-control" v-model.trim="init.m.remark" placeholder="填写描述">
+      </div>
 
       <div class="form-group col-4">
         <button type="button" class="btn btn-success" :disabled="!isValid" @click="save">
@@ -71,7 +93,7 @@ Recomment
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">选择推荐帖子</h5>
+        <h5 class="modal-title">选择推荐帖子</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -83,32 +105,21 @@ Recomment
             <button class="btn btn-outline-success" type="button" @click="searchPosts"><i class="fas fa-search"></i> 搜索</button>
           </div>
 
-          <table class="table table-hover">
+          <table class="table table-hover" v-if="posts.length > 0">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">ID</th>
+                <th scope="col">标题</th>
+                <th scope="col">操作</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
+              <tr v-for="item in posts">
+                <th scope="row">@{{item.id}}</th>
+                <td>@{{item.title}}</td>
+                <td>
+                  <button type="button" class="btn btn-link" @click="slectPost(item)">选择</button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -139,35 +150,88 @@ new Vue({
         current: "{{route('admin.recomment.save')}}",
         upload: "{{route('admin.upload')}}",
       },
+      currentPost: {},
+      posts: [],
     };
   },
   computed: {
+    typeData: {
+      get() {
+        return this.init.m.type;
+      },
+      set(value) {
+        this.init.m.type = value;
+        if (value != 'posts') {
+          this.currentPost = {};
+          this.init.m.recomment_id = '';
+        }
+      }
+    },
     isValid() {
+      var m = this.init.m;
+      if (m.position == '') {
+        return false;
+      }
 
       return true;
     }
   },
   methods: {
-    openModal() {
-      $("#postsModal").modal('show');
-    },
-    searchPosts() {
+    searchPosts(event) {
+      var key = this.$refs['posts-key'].value;
+      if (key == '') {
+        return false;
+      }
 
+      var $btn = $(event.currentTarget).loading('<i class="fas fa-spinner fa-spin"></i>');
+      var _this = this;
+      axios.post(this.href.current, {
+        action: 'posts',
+        key: key
+      }).then(function (response) {
+        return response.data;
+      }).then(function (rep) {
+        if (rep.status) {
+          _this.posts = rep.data;
+        } else {
+          alert(rep.msg);
+        }
+        $btn.loading('reset');
+      });
+    },
+    slectPost(item) {
+      this.currentPost = item;
+      this.init.m.recomment_id = item.id;
+      $("#postsModal").modal('hide');
     },
     save(event) {
-      // var $btn = $(event.currentTarget).loading('<i class="fas fa-spinner fa-spin"></i>');
-      // var _this = this;
-      // axios.post(this.href.current, {
-      //   action: 'save',
-      //   data: this.init.m
-      // }).then(function (response) {
-      //   if (response.status) {
-      //     window.location.href = _this.href.index;
-      //   } else {
-      //     alert(response.msg);
-      //     $btn.loading('reset');
-      //   }
-      // });
+      if (this.init.m.recomment_id == '') {
+        if (this.init.m.type == 'posts') {
+          alert('请选择推荐帖子');
+          return false;
+        }
+        if (this.init.m.type == 'category') {
+          alert('请选择推荐分类');
+          return false;
+        }
+      }
+      if (this.init.m.type == 'url' && this.init.m.url == '') {
+        alert('请填写跳转链接');
+        return false;
+      }
+      var $btn = $(event.currentTarget).loading('<i class="fas fa-spinner fa-spin"></i>');
+      var _this = this;
+      axios.post(this.href.current, {
+        action: 'save',
+        data: this.init.m
+      }).then(function (response) {
+        if (response.status) {
+          window.location.href = _this.href.index;
+        } else {
+          alert(response.msg);
+          $btn.loading('reset');
+        }
+      });
     },
   }
 });

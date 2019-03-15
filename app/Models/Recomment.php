@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recomment extends Model
 {
+    protected $table = 'recomment';
     public $timestamps = true;
 
     /** Filed the `type` options. */
