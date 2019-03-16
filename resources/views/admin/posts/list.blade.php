@@ -135,9 +135,8 @@ const vm = new Vue({
       var categoryName = '';
       this.init.categorys.forEach(row =>{
         row.children.forEach(child =>{
-          if (child.id = id) {
+          if (child.id == id) {
             categoryName = child.category;
-            return false;
           }
         });
       });

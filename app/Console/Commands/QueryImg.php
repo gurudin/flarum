@@ -71,12 +71,13 @@ class QueryImg extends Command
             }
 
             $posts[] = [
-                'fk_category_id' => 2,
-                'fk_user_id' => rand(1, 3),
+                'fk_category_id' => rand(6, 9),
+                'fk_user_id' => 1,
                 'tags' => '',
                 'pv' => rand(20, 500),
                 'title' => $item['title'],
                 'cover' => $item['cover'],
+                'real_pv' => 0,
                 'content' => $content,
                 'status' => 1,
                 'created_at' => date('Y-m-d H:i:s'),

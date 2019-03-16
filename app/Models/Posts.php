@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Posts extends Model
 {
     const READ_LEVEL = [
-        0 => 'All users',
-        1 => 'Read after logging in',
-        2 => 'Vip users can read (no coins consumption)',
-        3 => 'Vip users can read (coins consumption)'
+        0 => '所有用户', // All users
+        1 => '登陆后查看', // Read after logging in
+        2 => 'Vip用户(不消耗金币)', // Vip users can read (no coins consumption)
+        3 => 'Vip用户(消耗金币)', // Vip users can read (coins consumption)
     ];
 
     protected static function attributeLabels()

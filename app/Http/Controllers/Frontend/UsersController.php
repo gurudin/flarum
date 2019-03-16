@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use App\Validator\Frontend\UsersValidator;
 use App\User;
 use App\Models\Accounts;

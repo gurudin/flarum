@@ -22,7 +22,8 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::post('/login', 'UsersController@login')->name('frontend.login');
     Route::post('/register', 'UsersController@register')->name('frontend.register');
     Route::get('/logout', 'UsersController@logout')->name('frontend.logout');
-    Route::get('/post/{id}', 'PostsController@post')->name('frontend.post');
+    Route::get('/posts/{alias}', 'PostsController@list')->name('frontend.posts');
+    Route::get('/d/{id}', 'PostsController@detail')->name('frontend.post');
 });
 
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {

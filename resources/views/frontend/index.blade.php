@@ -30,7 +30,7 @@
               @if ($recomment['type'] == 'posts')
                 <a href="{{route('frontend.post', ['id' => $recomment['recomment_id']])}}" target="_blank">
               @elseif ($recomment['type'] == 'category')
-                <a href="{{url(url()->current() . '?alias=' . $recomment['alias'])}}">
+                <a href="{{route('frontend.posts', ['alias' => $recomment['alias']])}}">
               @else
                 <a href="{{$recomment['url']}}" target="_blank">
               @endif
@@ -110,7 +110,7 @@
     @if ($recomment['type'] == 'posts')
       <a href="{{route('frontend.post', ['id' => $recomment['recomment_id']])}}" target="_blank" class="rounded" style="background-color: {{$metrics->randColor()}};">
     @elseif ($recomment['type'] == 'category')
-      <a href="{{url(url()->current() . '?alias=' . $recomment['alias'])}}" class="rounded" style="background-color: {{$metrics->randColor()}};">
+      <a href="{{route('frontend.posts', ['alias' => $recomment['alias']])}}" class="rounded" style="background-color: {{$metrics->randColor()}};">
     @else
       <a href="{{$recomment['url']}}" target="_blank" class="rounded" style="background-color: {{$metrics->randColor()}};">
     @endif
@@ -119,12 +119,13 @@
     </a>
   @endforeach
 </div>
+<div class="clearfix"></div>
 @endsection
 
 @section('content')
 <div class="container-fluid mb-3">
 
-  {{-- @foreach ($categorys as $category)
+  @foreach ($categorys as $category)
     <div class="panel-category bg-white rounded mt-3">
       <nav class="navbar bg-secondary rounded-top">
         <a class="text-white" href="{{url(url()->current() . '?alias=' . $category['alias'])}}">{{$category['category']}}</a>
@@ -138,11 +139,13 @@
         
         @foreach ($category['children'] as $child)
         <div class="media mt-2 mb-1 col-xl-3 col-12">
-        <img class="mr-2 pointer rounded" width="64" height="64" src="{{$child['pic']}}" alt="{{$child['category']}}" title="{{$child['category']}}">
+          <a href="{{route('frontend.posts', ['alias' => $child['alias']])}}">
+            <img class="mr-2 pointer rounded" width="64" height="64" src="{{$child['pic']}}" alt="{{$child['category']}}" title="{{$child['category']}}">
+          </a>
           <div class="media-body nowrap">
-            <b class="mt-0 h5 def-color pointer">
+            <a href="{{route('frontend.posts', ['alias' => $child['alias']])}}" class="mt-0 font15 def-color pointer">
               {{$child['category']}}
-            </b>
+            </a>
             <p class="font12 text-muted">主题: 123</p>
             <p class="font12 text-muted">最后发表时间: 13.12.11</p>
           </div>
@@ -151,7 +154,7 @@
         
       </div>
     </div>
-  @endforeach --}}
+  @endforeach
 
 </div>
 
