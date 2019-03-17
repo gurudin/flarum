@@ -158,9 +158,9 @@
 
 </div>
 
-@login(['blade' => $blade])
+@login()
 @endlogin
 
-@register(['blade' => $blade])
+@register()
 @endregister
 @endsection

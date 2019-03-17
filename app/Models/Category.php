@@ -12,14 +12,15 @@ class Category extends Model
     protected static function attributeLabels()
     {
         return [
-            'parent_id' => 0,
-            'category'  => '',
-            'weight'    => 0,
-            'alias'     => '',
-            'color'     => '',
-            'pic'       => '',
-            'remark'    => '',
-            'enabled'   => 0
+            'parent_id'  => 0,
+            'category'   => '',
+            'weight'     => 0,
+            'alias'      => '',
+            'color'      => '',
+            'pic'        => '',
+            'remark'     => '',
+            'enabled'    => 0,
+            'read_level' => 0,
         ];
     }
 

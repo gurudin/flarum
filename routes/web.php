@@ -24,6 +24,10 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::get('/logout', 'UsersController@logout')->name('frontend.logout');
     Route::get('/posts/{alias}', 'PostsController@list')->name('frontend.posts');
     Route::get('/d/{id}', 'PostsController@detail')->name('frontend.post');
+    // ajax收藏
+    Route::post('/d/collect', 'PostsController@ajaxCollect')->name('frontend.post.collect');
+    // ajax留言
+    Route::post('/d/comment', 'PostsController@ajaxComment')->name('frontend.post.comment');
 });
 
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {

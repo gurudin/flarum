@@ -55,5 +55,18 @@ return [
         'please_refresh_and_try_again' => '请刷新页面重新尝试',
         // ---
         'latest_at' => '最后发表时间',
+        'say_something' => '说点什么...',
+        'collect_success' => '收藏成功！',
+        'collect_error' => '收藏失败！',
+        'comments_too_much' => '留言过多！',
+        'comment_success' => '留言成功！',
+        'comment_error' => '留言失败！',
+        'comment_are_too_short' => '留言过短，最少4个字。',
+        'comment_is_too_long' => '留言过长，最多100个字。',
     ],
+    // --
+    'user_center' => '个人中心',
+    'logout' => '登出',
+    'collected' => '已收藏',
+    'first_login' => '请先登录',
 ];

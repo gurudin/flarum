@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Posts;
 
 class CategoryController extends Controller
 {
@@ -62,7 +63,9 @@ class CategoryController extends Controller
 
             $categorys = Category::where(['parent_id' => 0])->get();
 
-            return view('admin.category.save', compact('m', 'categorys'));
+            $read_level = Posts::READ_LEVEL;
+
+            return view('admin.category.save', compact('m', 'categorys', 'read_level'));
         }
 
         /**
@@ -81,6 +84,7 @@ class CategoryController extends Controller
                 $m->weight = $data['weight'];
                 $m->pic = empty($data['pic']) ? '' : $data['pic'];
                 $m->remark = empty($data['remark']) ? '' : $data['remark'];
+                $m->read_level = $data['read_level'];
 
                 return $m->save()
                     ? ['status' => true, 'msg' => 'success']
@@ -96,7 +100,8 @@ class CategoryController extends Controller
                 $m->weight = $data['weight'];
                 $m->pic = empty($data['pic']) ? '' : $data['pic'];
                 $m->remark = empty($data['remark']) ? '' : $data['remark'];
-
+                $m->read_level = $data['read_level'];
+                
                 return $m->save()
                     ? ['status' => true, 'msg' => 'success']
                     : ['status' => false, 'msg' => 'Failed to update.'];

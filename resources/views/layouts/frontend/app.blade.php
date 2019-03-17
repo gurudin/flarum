@@ -18,7 +18,7 @@
   
   <style>
     .gurudin-toast {
-      position: absolute;
+      position: fixed;
       cursor: pointer;
       top: 10px;
       right: 10px;
@@ -101,9 +101,24 @@
     <p class="text-center mt-3">
       <a href="/" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.list')"><i class="fas fa-list-ol"></i></a>
     </p>
+
+    @auth
     <p class="text-center mt-3">
-      <a href="/" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.collect')"><i class="far fa-star"></i></a>
+      <a href="javascript:alert('s');" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.collect')"><i class="far fa-star"></i></a>
     </p>
+    <p class="text-center mt-3">
+      <a href="javascript:alert('s');" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.user_center')"><i class="fas fa-user-cog"></i></a>
+    </p>
+    @endauth
+    
+    @unless (Auth::check())
+      <p class="text-center mt-3">
+        <a href="javascript:login.show = true;" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.collect')"><i class="far fa-star"></i></a>
+      </p>
+      <p class="text-center mt-3">
+        <a href="javascript:login.show = true;" class="text-white font20"  data-toggle="tooltip" data-placement="left" title="@lang('frontend.user_center')"><i class="fas fa-user-cog"></i></a>
+      </p>
+    @endunless
   </div>
 
   <div class="right-content">
@@ -137,11 +152,11 @@
               </button>
               <div aria-labelledby="in-login-btn" class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item text-dark font13 pointer">
-                  <i class="fas fa-user-cog"></i>&nbsp;&nbsp;&nbsp;&nbsp;我的资料
+                  <i class="fas fa-user-cog"></i>&nbsp;&nbsp;&nbsp;&nbsp;@lang('frontend.user_center')
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-dark font13 pointer" href="{{route('frontend.logout')}}">
-                  <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;登出
+                  <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;@lang('frontend.logout')
                 </a>
               </div>
             </div>

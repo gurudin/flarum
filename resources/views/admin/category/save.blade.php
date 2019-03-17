@@ -28,6 +28,13 @@ Category
         </select>
       </div>
 
+      <div class="form-group col-4">
+        <label>Read level</label>
+        <select class="form-control" v-model.number="init.m.read_level">
+          <option v-for="(name,key) in init.readLevel" :value="key">@{{name}}</option>
+        </select>
+      </div>
+
       <div class="form-group col-8">
         <label>Category <small>*</small></label>
         <input type="text" class="form-control" v-model.trim="init.m.category" placeholder="Enter category name">
@@ -96,6 +103,7 @@ new Vue({
       init: {
         m: @json($m),
         categorys: @json($categorys),
+        readLevel: @json($read_level),
       },
       href: {
         index: "{{route('admin.category.list')}}",

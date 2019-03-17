@@ -11,9 +11,59 @@
 <script>
 const detail = new Vue({
   el: '#detail',
+  data() {
+    return {
+      reply_content: '',
+    };
+  },
   methods: {
     toReply() {
       $('html, body').animate({scrollTop: $('#hrefReply').offset().top}, 1000);
+    },
+    collect(event, pid) {
+      var $btn = $(event.currentTarget).loading('loading...');
+
+      axios.post("{{route('frontend.post.collect')}}", {
+        pid: pid,
+      }).then(function (response) {
+        return response.data;
+      }).then(function (rep) {
+        if (rep.status) {
+          if (rep.code == -1) {
+            login.show = true;
+          }
+          if (rep.code != 0) {
+            window.toast(rep.msg, 'info');
+          } else {
+            window.toast(rep.msg, 'success');
+          }
+        } else {
+          window.tosat(rep.msg, 'danger');
+        }
+        
+        $btn.loading('reset');
+      });
+    },
+    replyComment(event, pid) {
+      var $btn = $(event.currentTarget).loading('loading...');
+
+      axios.post("{{route('frontend.post.comment')}}", {
+        pid: pid,
+        comment: this.reply_content
+      }).then(function (response) {
+        return response.data;
+      }).then(function (rep) {
+        if (rep.status) {
+          window.toast(rep.msg, 'success');
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } else {
+          window.toast(rep.msg, 'danger');
+        }
+        
+        $btn.loading('reset');
+      });
     }
   }
 });
@@ -87,7 +137,9 @@ const detail = new Vue({
         {!! $post->content !!}
 
         <p class="text-center">
-          <button type="button" class="btn btn-light btn-sm font12"><i class="fas fa-star" style="color: #FF9900;"></i> 收藏</button>
+          <button type="button" class="btn btn-light btn-sm font12" @click="collect($event, {{$post->id}})">
+            <i class="fas fa-star" style="color: #FF9900;"></i> @lang('frontend.collect')
+          </button>
         </p>
       </div>
     </div>
@@ -95,28 +147,35 @@ const detail = new Vue({
 </div>
 
 {{-- Comments --}}
+@foreach ($comments as $comment)
 <div class="card mb-3" style="border:none;">
   <div class="card-body">
     <div class="media">
       <figure class="figure mr-3 d-none d-xl-block d-lg-block">
         <figcaption class="figure-caption text-center"></figcaption>
-        <img class="align-self-start rounded-circle" src="{{$from->avatar}}" width="64">
+        <img class="align-self-start rounded-circle" src="{{$comment['avatar']}}" width="64">
       </figure>
 
       <div class="media-body" style="word-wrap:break-word;">
-        <h5>admin
+        <h5>{{$comment['name']}}
           <small class="text-black-50 font12">
-            @lang('frontend.posts.response_at'): 03/01
+            @lang('frontend.posts.response_at'): {{date('m/d', strtotime($comment['created_at']))}}
           </small>
         </h5>
         
         <div class="mb-1 border-dashed"></div>
-        111asd
-        {{-- {!! $post->content !!} --}}
+        {{ $comment['content'] }}
+
+        @isset($comment['reply'])
+          <div class="mt-3 ml-3 p-1 def-color" style="border: 1px dashed #dee2e6 !important;">
+            <i class="fas fa-reply-all"></i> {!! $comment['reply'] !!}
+          </div>
+        @endisset
       </div>
     </div>
   </div>
 </div>
+@endforeach
 {{-- /Comments --}}
 
 <div class="card mb-3" id="hrefReply" style="border:none;">
@@ -127,9 +186,9 @@ const detail = new Vue({
           @unless (Auth::check())
           <div class="unlogin text-center text-muted">
             @lang('frontend.posts.you_need_to_login_first')
-            <a href="{{url(url()->current() . '?blade=login')}}" class="">@lang('frontend.login')</a>
+            <a href="javascript:login.show = true" class="">@lang('frontend.login')</a>
             or
-            <a href="{{url(url()->current() . '?blade=register')}}" class="">@lang('frontend.register')</a>
+            <a href="javascript:register.show = true" class="">@lang('frontend.register')</a>
           </div>
           @endunless
 
@@ -141,8 +200,8 @@ const detail = new Vue({
                 <img class="mr-1 float-left rounded-circle d-block d-xl-none d-lg-none" src="{{Auth::user()->avatar}}" width="25">
                 <i class="fas fa-reply"></i> {{$post->title}}
               </h5>
-              <textarea class="form-control border-0" style="height: 165px;" placeholder="说点什么..."></textarea>
-              <button type="button" class="btn btn-info btn-sm float-right text-white"><i class="far fa-paper-plane"></i> 回复</button>
+              <textarea class="form-control border-0" v-model.trim="reply_content" style="height: 165px;" placeholder="@lang('frontend.posts.say_something')"></textarea>
+              <button @click="replyComment($event, {{$post->id}})" :disabled="reply_content==''" type="button" class="btn btn-info btn-sm float-right text-white"><i class="far fa-paper-plane"></i> @lang('frontend.posts.reply')</button>
             </div>
           </div>
           @endauth
@@ -154,9 +213,9 @@ const detail = new Vue({
 @endif
 </span>
 
-@login(['blade' => $blade])
+@login()
 @endlogin
 
-@register(['blade' => $blade])
+@register()
 @endregister
 @endsection

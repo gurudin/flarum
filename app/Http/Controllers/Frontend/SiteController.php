@@ -47,9 +47,7 @@ class SiteController
         // This hots posts. (6 rows)
         $posts['hots'] = Posts::getLaetstOrHots('hots');
 
-        $blade = $request->input('blade', '');
         return view('frontend.index', compact(
-            'blade',
             'categorys',
             'recomments',
             'posts'
