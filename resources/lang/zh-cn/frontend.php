@@ -53,5 +53,7 @@ return [
         'coin_shortage' => '金币数量不足',
         'click_recharge_coin' => '点击充值',
         'please_refresh_and_try_again' => '请刷新页面重新尝试',
+        // ---
+        'latest_at' => '最后发表时间',
     ],
 ];

@@ -25,9 +25,9 @@ const detail = new Vue({
 @if ($isRead == 1)
   <div class="text-center text-muted m-3 p-3">
     @lang('frontend.posts.it_can_be_read_after_logging_in')
-    <a href="{{url(url()->current() . '?blade=login')}}" class="">@lang('frontend.login')</a>
+    <a href="javascript:login.show = true;" class="">@lang('frontend.login')</a>
     or
-    <a href="{{url(url()->current() . '?blade=register')}}" class="">@lang('frontend.register')</a>
+    <a href="javascript:register.show = true;" class="">@lang('frontend.register')</a>
   </div>
 @elseif ($isRead == 2)
   <div class="text-center text-muted m-3 p-3">

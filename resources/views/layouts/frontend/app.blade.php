@@ -150,10 +150,12 @@
 
           @unless (Auth::check())
           <li class="nav-item">
-            <a href="{{url(url()->current() . '?blade=login')}}" class="nav-link font12">@lang('frontend.login')</a>
+            {{-- <a href="{{url(url()->current() . '?blade=login')}}" class="nav-link font12">@lang('frontend.login')</a> --}}
+            <a href="javascript:login.show = true;" class="nav-link font12">@lang('frontend.login')</a>
           </li>
           <li class="nav-item">
-            <a href="{{url(url()->current() . '?blade=register')}}" class="nav-link font12">@lang('frontend.register')</a>
+            {{-- <a href="{{url(url()->current() . '?blade=register')}}" class="nav-link font12">@lang('frontend.register')</a> --}}
+            <a href="javascript:register.show = true;" class="nav-link font12">@lang('frontend.register')</a>
           </li>
           @endunless
         </ul>

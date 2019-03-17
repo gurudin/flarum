@@ -146,8 +146,8 @@
             <a href="{{route('frontend.posts', ['alias' => $child['alias']])}}" class="mt-0 font15 def-color pointer">
               {{$child['category']}}
             </a>
-            <p class="font12 text-muted">主题: 123</p>
-            <p class="font12 text-muted">最后发表时间: 13.12.11</p>
+            <p class="font12 text-muted">@lang('frontend.posts.total_posts'): {{$child['total']}}</p>
+            <p class="font12 text-muted">@lang('frontend.posts.latest_at'): {{date('Y.m.d', strtotime($child['latest_at']))}}</p>
           </div>
         </div>
         @endforeach

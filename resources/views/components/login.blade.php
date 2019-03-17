@@ -1,11 +1,12 @@
-@if ($blade == 'login')
-<div class="login" id="login">
+{{-- @if ($blade == 'login') --}}
+<div class="login" id="login" v-if="show" v-cloak>
   <div tabindex="-1" role="dialog" aria-hidden="true" class="modal fade show" style="display: block;">
     <div role="document" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">@lang('frontend.inOrUp.sign-in')</h5>
-          <a href="{{url()->current()}}" class="close"><span aria-hidden="true">×</span></a>
+          {{-- <a href="{{url()->current()}}" class="close"><span aria-hidden="true">×</span></a> --}}
+          <a @click="show = false" class="close pointer"><span aria-hidden="true">×</span></a>
         </div>
 
         <div class="modal-body">
@@ -47,7 +48,7 @@
               </div>
             </div>
             <p class="text-muted text-center">
-              <small>@lang('frontend.inOrUp.dont-have-an-account') <a href="{{url(url()->current() . '?blade=register')}}" class="def-color">@lang('frontend.inOrUp.sign-up')</a></small>
+              <small>@lang('frontend.inOrUp.dont-have-an-account') <a @click="show = false, register.show = true" class="def-color pointer">@lang('frontend.inOrUp.sign-up')</a></small>
             </p>
           </form>
         </div>
@@ -59,7 +60,7 @@
 </div>
 
 <script>
-new Vue({
+const login = new Vue({
   el: "#login",
   data() {
     return {
@@ -69,6 +70,7 @@ new Vue({
         remember_me: false,
       },
       errors: {},
+      show: false,
     };
   },
   methods: {
@@ -96,4 +98,4 @@ new Vue({
   }
 });
 </script>
-@endif
+{{-- @endif --}}

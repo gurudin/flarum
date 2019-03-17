@@ -1,11 +1,10 @@
-@if ($blade == 'register')
-<div class="register" id="register">
+<div class="register" id="register" v-if="show" v-cloak>
   <div tabindex="-1" role="dialog" aria-hidden="true" class="modal fade show" style="display: block;">
     <div role="document" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">@lang('frontend.inOrUp.sign-up')</h5>
-          <a href="{{url()->current()}}" class="close"><span aria-hidden="true">×</span></a>
+          <a @click="show = false" class="close pointer"><span aria-hidden="true">×</span></a>
         </div>
         
         <div class="modal-body">
@@ -70,7 +69,7 @@
             </div>
             
             <p class="text-muted text-center">
-              <small>@lang('frontend.inOrUp.already-have-an-account') <a href="{{url(url()->current() . '?blade=login')}}" class="def-color">@lang('frontend.inOrUp.sign-in')</a></small>
+              <small>@lang('frontend.inOrUp.already-have-an-account') <a @click="show = false, login.show = true" class="def-color pointer">@lang('frontend.inOrUp.sign-in')</a></small>
             </p>
           </form>
         </div>
@@ -83,7 +82,7 @@
 </div>
 
 <script>
-new Vue({
+const register = new Vue({
   el: "#register",
   data() {
     return {
@@ -95,6 +94,7 @@ new Vue({
         shareCode: '',
       },
       errors: {},
+      show: false,
     };
   },
   methods: {
@@ -107,7 +107,9 @@ new Vue({
         return response.data;
       }).then(function (rep) {
         if (rep.status) {
-          window.location.href = "{{url(url()->current() . '?blade=login')}}";
+          // window.location.href = "{{url(url()->current() . '?blade=login')}}";
+          _this.show = false;
+          login.show = true;
         } else {
           if (rep.code == -1) {
             _this.errors = rep.data;
@@ -122,4 +124,3 @@ new Vue({
   }
 });
 </script>
-@endif
