@@ -15,6 +15,7 @@
   <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
   
   <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/hm.js') }}"></script>
   
   <style>
     .gurudin-toast {

@@ -137,6 +137,10 @@ class PostsController
 
         // Comments
         $comments = Comments::getAllByPosts($post->id);
+
+        // Change real pv.
+        $post->real_pv = $post->real_pv + 1;
+        $post->save();
         
         return view('frontend.posts.detail', compact(
             'isRead',

@@ -33,7 +33,7 @@ class AddFiledsToCategoryTable extends Migration
     public function down()
     {
         Schema::table('category', function (Blueprint $table) {
-            $table->dropColumn(['read_level', 'avatar', 'location']);
+            $table->dropColumn(['read_level']);
         });
     }
 }

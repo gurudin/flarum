@@ -21,7 +21,7 @@
     <div class="d-flex">
       <nav class="sidebar">
         <div class="sidebar-content">
-          <a class="sidebar-brand" href="/">
+          <a class="sidebar-brand" href="/admin.cms">
             <span class="align-middle">AppStack</span>
           </a>
 

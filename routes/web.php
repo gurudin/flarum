@@ -17,6 +17,7 @@ Route::get('/m', function () {
     return view('app');
 });
 
+// Web
 Route::group(['namespace' => 'Frontend'], function () {
     Route::get('/', 'SiteController@index')->name('frontend.home');
     Route::post('/login', 'UsersController@login')->name('frontend.login');
@@ -28,11 +29,15 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::post('/d/collect', 'PostsController@ajaxCollect')->name('frontend.post.collect');
     // ajax留言
     Route::post('/d/comment', 'PostsController@ajaxComment')->name('frontend.post.comment');
+
+    // 统计
+    Route::get('/hm.gif', 'StatisticController@hm')->name('frontend.statistic');
 });
 
+// Admin
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {
     Auth::routes();
-    Route::get('/', 'SiteController@index')->name('admin.home');
+    Route::match(['get', 'post'], '/', 'SiteController@index')->name('admin.home');
     
     // Upload
     Route::post('/upload', 'SiteController@upload')->name('admin.upload');
