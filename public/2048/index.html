@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/app.css">
+
+    <title>2048</title>
+    <style>
+      .s0 {
+        background: #cdc1b5;
+        color: #756d65;
+      }
+      .s2{
+        background: #f8f3e8;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); 
+        color: #756d65;
+      }
+      .s4{
+        background: #ede0c8;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); 
+        color: #756d65;
+      }
+      .s8{
+        color: #f9f6f2;
+        background: #f2b179; 
+      }
+      .s16{
+        color: #f9f6f2;
+        background: #f59563; 
+      }
+      .s32{
+        color: #f9f6f2;
+        background: #f67c5f;
+      }
+      .s64{
+        color: #f9f6f2;
+        background: #f65e3b; 
+      }
+      .s128{
+        color: #f9f6f2;
+        background: #edcf72;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+      }
+      .s256{
+        color: #f9f6f2;
+        background: #edcc61;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+      }
+      .s512{
+        color: #f9f6f2;
+        background: #edc850;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+      }
+      .s1024{
+        color: #f9f6f2;
+        background: #edc53f;
+        font-size:2em;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+      }
+      .s2048{
+        color: #f9f6f2;
+        background: #edc22e;
+        font-size:2em;
+        box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+      }
+      .s4096{
+        color: #f9f6f2;
+        background: #61c0ed;
+        font-size:2em;
+        box-shadow: 0 0 30px 10px hsla(211, 84%, 70%, 0.45),inset 0 0 0 1px hsla(0,0%,100%,.33333);
+      }
+
+      .cell {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 2.8em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+      }
+      .box {
+        border: 1px solid #beae9f;
+        height: 25vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid" id="app">
+      <!-- <div class="row p-1" style="background: #beae9f;">-->
+      <div class="row p-1">
+
+        <div class="col-3 rounded-sm position-relative box"
+          v-for="(v,inx) in gridData"
+          @touchstart="move($event, 'start')"
+          @touchend="move($event, 'end')">
+
+          <div class="w-100 h-100 cell rounded-sm">{{v == '0' ? '' : v}}</div>
+        </div>
+
+      </div>
+
+      {{score}}
+    </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+  const vm = new Vue({
+    el: '#app',
+    data() {
+      return {
+        score: 0,
+        grid: [
+          {'10': '0', '20': '0', '30': '0', '40': '0'},
+          {'11': '0', '21': '0', '31': '0', '41': '0'},
+          {'12': '0', '22': '0', '32': '0', '42': '0'},
+          {'13': '0', '23': '0', '33': '0', '43': '0'}
+        ],
+        occupyGrid: 0,
+        keys: ['10', '11', '12', '13', '20', '21', '22', '23', '30', '31', '32', '33', '40', '41', '42', '43'],
+        touch: {start: {}, end: {}},
+        direction: '',
+      };
+    },
+    computed: {
+      gridData() {
+        var grid = [];
+
+        this.grid.forEach(row =>{
+          Object.keys(row).forEach(function(key){
+            grid.push(row[key]);
+          });
+        });
+
+        return grid;
+      },
+    },
+    methods: {
+      randomValue () {
+        if (this.occupyGrid >= 16) {
+          this.gameOver();
+          return false;
+        }
+
+        let key = this.keys[Math.ceil(Math.random() * 16) - 1];
+        if (this.grid[key.substr(1,1)][key] == 0) {
+          this.grid[key.substr(1,1)][key] = ['2', '2', '4'][Math.ceil(Math.random() * 3) - 1];
+          this.occupyGrid++;
+        } else {
+          this.randomValue();
+        }
+      },
+      gameOver() {
+        console.log('game over');
+      },
+      move(e, type) {
+        if (type == 'start') {
+          this.touch.start = {
+            timeStamp: e.timeStamp,
+            clientX: e.targetTouches[0].clientX,
+            clientY: e.targetTouches[0].clientY
+          };
+        } else {
+          this.touch.end = {
+            timeStamp: e.timeStamp,
+            clientX: e.changedTouches[0].clientX,
+            clientY: e.changedTouches[0].clientY
+          };
+        }
+
+        if (type == 'end' && (this.touch.end.timeStamp - this.touch.start.timeStamp) > 150) {
+          let x = this.touch.end.clientX - this.touch.start.clientX;
+          let y = this.touch.end.clientY - this.touch.start.clientY;
+          if ((x < 50 && x > -50) && (y < 50 && y > -50)) {
+            console.log('err');
+            return false;
+          }
+
+          if (Math.abs(x) > Math.abs(y)) {
+            // x
+            this.direction = x > 50 ? 'right' : 'left';
+            this.moveGrid();
+          }
+
+          if (Math.abs(y) > Math.abs(x)) {
+            // y
+            this.direction = y > 50 ? 'down' : 'up';
+            this.moveGrid();
+          }
+        }
+      },
+      moveGrid() {
+        console.log(this.direction);
+        switch (this.direction) {
+          case 'left':
+            this.left();
+            break;
+        }
+
+        this.randomValue();
+      },
+      left() {
+        for (var i=0; i<4; i++) {
+          // let tmp = this.grid[i][4 + i.toString()];
+          let tmpArr = {};
+          for (var j=0; j<4; j++) {
+            let inx = (j + 1).toString() + i;
+            if (this.grid[i][inx] != 0) {
+              tmpArr[(Object.keys(tmpArr).length + 1).toString() + i] = this.grid[i][inx];
+            }
+          }
+
+          if (Object.keys(tmpArr).length > 1) {
+            for (let m=0; m<Object.keys(tmpArr).length; m++) {
+              let currVal = tmpArr[(m + 1).toString() + i];
+              let nextVal = typeof tmpArr[(m + 2).toString() + i] == 'undefined' ? 0 : tmpArr[(m + 2).toString() + i];
+              
+              if (currVal == nextVal) {
+                tmpArr[(m + 1).toString() + i] = parseInt(currVal) + parseInt(nextVal);
+                this.occupyGrid--;
+                this.score += parseInt(nextVal);
+                if (typeof tmpArr[(m + 2).toString() + i] != 'undefined') {
+                  tmpArr[(m + 2).toString() + i] = 0;
+                }
+              }
+            }
+          }
+
+          for (let k=Object.keys(tmpArr).length; k<4; k++) {
+            tmpArr[(k + 1).toString() + i] = 0;
+          }
+
+          this.$set(this.grid, i, tmpArr);
+        }
+        console.log(this.grid);
+      },
+    },
+    created() {
+      this.randomValue();
+    }
+  });
+  </script>
+  </body>
+</html>
