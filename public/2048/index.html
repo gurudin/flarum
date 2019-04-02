@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap CSS -->
@@ -96,12 +97,8 @@
 
     <div class="container-fluid" id="app">
       <h3 class="text-center m-3 text-muted">Score: {{score}}</h3>
-      <div class="row p-1" style="background: #beae9f;">
-        <div class="col-3 rounded-sm position-relative box"
-          v-for="(v,inx) in gridData"
-          @touchstart="move($event, 'start')"
-          @touchend="move($event, 'end')">
-
+      <div class="row p-1" style="background: #beae9f;" @touchstart="move($event, 'start')" @touchend="move($event, 'end')">
+        <div class="col-3 rounded-sm position-relative box" v-for="(v,inx) in gridData">
           <div class="w-100 h-100 cell rounded-sm" :class="'s'+v">{{v == '0' ? '' : v}}</div>
         </div>
 
@@ -157,6 +154,7 @@
       },
       gameOver() {
         console.log('game over');
+        alert('Game over');
       },
       move(e, type) {
         if (type == 'start') {
@@ -345,6 +343,10 @@
       this.randomValue();
     }
   });
+
+  document.body.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+  }, {passive: false});
   </script>
   </body>
 </html>
