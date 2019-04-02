@@ -84,6 +84,7 @@
         justify-content: center;
         align-items: center;
         font-weight: bold;
+        transition: .2s;
       }
       .box {
         border: 4px solid #beae9f;
@@ -91,11 +92,11 @@
       }
     </style>
   </head>
-  <body>
-    <div class="container-fluid" id="app">
-      <div class="row p-1" style="background: #beae9f;">
-      <!-- <div class="row p-1">-->
+  <body style="background: #efe7da;">
 
+    <div class="container-fluid" id="app">
+      <h3 class="text-center m-3 text-muted">Score: {{score}}</h3>
+      <div class="row p-1" style="background: #beae9f;">
         <div class="col-3 rounded-sm position-relative box"
           v-for="(v,inx) in gridData"
           @touchstart="move($event, 'start')"
@@ -105,8 +106,6 @@
         </div>
 
       </div>
-
-      {{score}}
     </div>
 
   <script src="../js/app.js"></script>
@@ -204,6 +203,12 @@
           case 'right':
             this.right();
             break;
+          case 'up':
+            this.up();
+            break;
+          case 'down':
+            this.down();
+            break;
         }
 
         this.randomValue();
@@ -260,6 +265,81 @@
           this.$set(this.grid, i, tmpArr);
         }
       },
+      up() {
+        let grid = [{}, {}, {}, {}];
+        for (let j=0; j<4; j++) {
+          for (let i=0; i<4; i++) {
+            grid[i][(i + 1).toString() + j] = this.grid[j][(i+1).toString() + j];
+          }
+        }
+
+        for (let i=0; i<4; i++) {
+          let tmpArr = {};
+          for (let j=0; j<4; j++) {
+            let inx = (i + 1).toString() + j;
+            let value = parseInt(grid[i][inx]);
+            if (value == 0) {
+              continue;
+            }
+
+            if (Object.keys(tmpArr).length > 0 && tmpArr[(i + 1).toString() + Object.keys(tmpArr).length - 1] == value) {
+              tmpArr[(i + 1).toString() + Object.keys(tmpArr).length - 1] = tmpArr[(i + 1).toString() + Object.keys(tmpArr).length - 1] + value;
+              this.occupyGrid--;
+              this.score += value;
+            } else {
+              tmpArr[(i + 1).toString() + Object.keys(tmpArr).length] = value;
+            }
+          }
+
+          grid[i] = tmpArr;
+        }
+
+        for (let i=0; i<4; i++) {
+          for (let j=0; j<4; j++) {
+            let inx = (j + 1).toString() + i;
+
+            this.grid[i][inx] = typeof grid[j][inx] == 'undefined' ? 0 : grid[j][inx];
+          }
+        }
+      },
+      down() {
+        let grid = [{}, {}, {}, {}];
+        for (let i=0; i<4; i++) {
+          for (let j=3; j>=0; j--) {
+            let inx = (i + 1).toString() + j;
+            grid[i][inx] = this.grid[j][inx];
+          }
+        }
+
+        for (let i=0; i<4; i++) {
+          let tmpArr = {};
+          for (let j=3; j>=0; j--) {
+            let currentInx = (i + 1).toString() + j;
+            let value = parseInt(grid[i][currentInx]);
+
+            if (value == 0) {
+              continue;
+            }
+
+            if (Object.keys(tmpArr).length > 0 && tmpArr[(i + 1).toString() + (3 - Object.keys(tmpArr).length + 1)] == value) {
+              tmpArr[(i + 1).toString() + (3 - Object.keys(tmpArr).length + 1)] += value;
+              this.occupyGrid--;
+              this.score += value;
+            } else {
+              tmpArr[(i + 1).toString() + (3 - Object.keys(tmpArr).length)] = value;
+            }
+          }
+          
+          grid[i] = tmpArr;
+        }
+
+        for (let i=0; i<4; i++) {
+          for (let j=3; j>=0; j--) {
+            let inx = (i + 1).toString() + j;
+            this.grid[j][inx] = typeof grid[i][inx] == 'undefined' ? 0 : grid[i][inx];
+          }
+        }
+      }
     },
     created() {
       this.randomValue();
