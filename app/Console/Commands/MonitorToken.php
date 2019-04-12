@@ -77,6 +77,8 @@ class MonitorToken extends Command
 
     private function collectDetail(array $urls, string $token_name, int $monitor_id)
     {
+        $date = date('Y-m-d H:i:s');
+
         $ql = QueryList::get($urls['holders']);
 
         $table = $ql->find('table tbody');
@@ -98,6 +100,8 @@ class MonitorToken extends Command
             $m->belong = $row['belong'];
             $m->quantity = round($row['quantity'], 2);
             $m->percentage = round($row['quantity'] / $this->tokens[$token_name]['total'] * 100, 4);
+            $m->created_at = $date;
+            $m->updated_at = $date;
 
             $m->save();
         }
@@ -105,8 +109,13 @@ class MonitorToken extends Command
 
     private function collect(array $urls, string $token_name)
     {
+        $date = date('Y-m-d H:i:s');
+
         $m['token_name'] = $token_name;
         $m['transfers'] = 0;
+        $m['created_at'] = $date;
+        $m['updated_at'] = $date;
+        
 
         $ql = QueryList::get($urls['base']);
         $remark = $ql->find('div#ContentPlaceHolder1_tr_valuepertoken span.d-block')->html();

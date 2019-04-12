@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class MonitorDetail extends Model
 {
     protected $table = 'monitor_detail';
+    public $timestamps = false;
 }
