@@ -67,9 +67,6 @@ class MonitorToken extends Command
      */
     public function handle()
     {
-        print_r(date('Y-m-d H:i:s'));
-        print_r(date('Y-m-d H:i:s', time()));
-        return;
         header("Content-type: text/html; charset=utf-8");
 
         foreach ($this->tokens as $key => $token) {
