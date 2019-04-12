@@ -28,7 +28,7 @@ class CreateStatisticTable extends Migration
             $table->index(['ip']);
             $table->index(['language']);
             $table->index(['platform']);
-            $table->index(['url']);
+            // $table->index(['url']);
             
             $table->engine = 'MyISAM';
         });
