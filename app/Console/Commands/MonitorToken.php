@@ -126,8 +126,8 @@ class MonitorToken extends Command
         $arr = explode(" ", $str);
         $m['price_eth'] = $arr[1];
 
-        $arr = explode("(", $arr[2]);
-        $m['applies'] = str_replace('%)', '', $arr[1]);
+        $arr = explode("(", $str);
+        $m['applies'] = trim(str_replace('%', '', str_replace(')', '', str_replace('+', '', $arr[1]))));
 
         $str = $ql->find('div.mx-gutters-md-1 div.col-6 span.d-block')->html();
         $arr = explode('$', $str);

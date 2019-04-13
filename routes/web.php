@@ -34,6 +34,13 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::get('/hm.gif', 'StatisticController@hm')->name('frontend.statistic');
 });
 
+// monitor
+Route::group(['namespace' => 'Monitor'], function () {
+    Route::get('/monitor', 'SiteController@index')->name('monitor.home');
+    Route::get('/monitor/d/{token}', 'SiteController@detail')->name('monitor.detail');
+    Route::post('/monitor/getBaseData', 'SiteController@getBaseData')->name('monitor.getBaseData');
+});
+
 // Admin
 Route::group(['namespace' => 'Web', 'prefix' => 'admin.cms'], function () {
     Auth::routes();
