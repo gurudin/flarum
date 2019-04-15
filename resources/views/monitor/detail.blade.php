@@ -15,7 +15,7 @@
 </div>
 
 <div class="card mt-3 mb-3">
-  <div class="card-body">
+  <div class="card-body p-2">
     <h5 class="card-title">
       基本统计
       <div role="group" class="btn-group btn-group-sm float-right">
@@ -27,9 +27,9 @@
     {{-- This is some text within a card body. --}}
     <p class="text-center" v-if="base.chartData.rows.length == 0"><i class="fas fa-spinner fa-spin"></i></p>
     {{-- base --}}
-    <ve-line :data="base.chartData" :y-axis="yAxis" :legend="baseLegend" :tooltip="tooltip" height="300px" :settings="baseSettings" v-if="base.chartData.rows.length > 0"></ve-line>
+    {{-- <ve-line :data="base.chartData" :y-axis="yAxis" :legend="baseLegend" :tooltip="tooltip" height="300px" :settings="baseSettings" v-if="base.chartData.rows.length > 0"></ve-line> --}}
     
-    {{-- <ve-line :data="base.chartData" height="300px" :settings="baseSettings" v-if="base.chartData.rows.length > 0"></ve-line> --}}
+    <ve-histogram :data="base.chartData" :y-axis="yAxis" :legend="baseLegend" :tooltip="tooltip" height="300px" :settings="baseSettings" v-if="base.chartData.rows.length > 0"></ve-histogram>
   </div>
 </div>
 
@@ -39,6 +39,7 @@
 <script src="{{ asset('js/vue-select.js') }}"></script>
 <script src="{{ asset('js/echarts/echarts.min.js') }}"></script>
 <script src="{{ asset('js/echarts/line.min.js') }}"></script>
+<script src="{{ asset('https://cdn.jsdelivr.net/npm/v-charts/lib/histogram.min.js')}}"></script>
 <script>
 Vue.component('v-select', VueSelect.VueSelect);
 const vm = new Vue({
@@ -48,7 +49,7 @@ const vm = new Vue({
       labelMap: {
         'price_usd': '价格 USD',
         'price_eth': '价格 ETH',
-        'applies': '涨跌幅度 百分比',
+        'applies': '涨跌幅',
       },
     };
     this.yAxis = {
@@ -62,24 +63,43 @@ const vm = new Vue({
     this.baseLegend = {
       selected: {
         '价格 ETH': false,
-        '涨跌幅度 百分比': false,
+        '涨跌幅': false,
       },
     }
     this.tooltip = {
       formatter: function(value) {
-        let result = '<i class="fas fa-calendar-week"></i> ' + value.value[0] + '<br>';
+        // line
+        // let result = '<i class="fas fa-calendar-week"></i> ' + value.value[0] + '<br>';
+        // switch (value.seriesName) {
+        //   case '价格 USD':
+        //     result += 'USD <span style="color:gold;">$' + value.value[1] + '</span>';
+        //     break;
+        //   case '价格 ETH':
+        //     result += 'ETH ' + value.value[1];
+        //     break;
+        //   case '涨跌幅':
+        //     result += '百分比: <span style="color:' + (value.value[1] > 0 ? '#62D0B0' : '#E25D52') + '">' + value.value[1] + '%</span>';
+        //     break;
+        //   default:
+        //     result += value.value[1];
+        //     break;
+        // }
+
+        // histogram
+        
+        let result = '<i class="fas fa-calendar-week"></i> ' + value.name + '<br>';
         switch (value.seriesName) {
           case '价格 USD':
-            result += 'USD <span style="color:gold;">$' + value.value[1] + '</span>';
+            result += 'USD <span style="color:gold;">$' + value.data + '</span>';
             break;
           case '价格 ETH':
-            result += 'ETH ' + value.value[1];
+            result += 'ETH ' + value.data;
             break;
-          case '涨跌幅度 百分比':
-            result += '百分比: <span style="color:' + (value.value[1] > 0 ? '#62D0B0' : '#E25D52') + '">' + value.value[1] + '%</span>';
+          case '涨跌幅':
+            result += '百分比: <span style="color:' + (value.data > 0 ? '#62D0B0' : '#E25D52') + '">' + value.data + '%</span>';
             break;
           default:
-            result += value.value[1];
+            result += value.data;
             break;
         }
         return result;
@@ -117,7 +137,7 @@ const vm = new Vue({
       return data;
     },
   },
-  components: { VeLine },
+  components: { VeLine,VeHistogram },
   watch: {
     currentBlock() {
       let url = "{{route('monitor.detail', ['token' => '@'])}}";
