@@ -53,9 +53,9 @@ const vm = new Vue({
       },
     };
     this.yAxis = {
-      min: function(value) {
-        return value.min;
-      },
+      // min: function(value) {
+      //   return (value.min - value.min / 10).toFixed(4);
+      // },
       max: function(value) {
         return value.max;
       }
